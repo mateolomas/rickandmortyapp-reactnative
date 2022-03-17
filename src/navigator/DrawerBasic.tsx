@@ -4,7 +4,7 @@ import {
     DrawerContentComponentProps,
     DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image, View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import CharacterList from '../screens/CharacterList';
 import Home from '../screens/Home';
@@ -18,7 +18,6 @@ const Drawer = createDrawerNavigator();
 export const DrawerBasic = () => {
     return (
         <Drawer.Navigator drawerContent={props => <MenuInterno {...props} />}>
-            <Drawer.Screen name="WelcomeScreen" component={WelcomeScreen} />
             <Drawer.Screen name="CharacterList" component={CharacterList} />
             <Drawer.Screen name="Home" component={Home} />
         </Drawer.Navigator>
@@ -29,7 +28,7 @@ const MenuInterno = ({
     navigation,
 }: DrawerContentComponentProps<DrawerContentOptions>) => {
 
-    const { authState } = React.useContext(AuthContext);
+    const { authState, signOut, signInWithUser } = React.useContext(AuthContext);
 
 
 
@@ -76,7 +75,7 @@ const MenuInterno = ({
                         flexDirection: 'row',
                     }}
                     onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.menuTexto}> Welcome</Text>
+                    <Text style={styles.menuTexto}> Inicio</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -87,10 +86,12 @@ const MenuInterno = ({
 
                 <TouchableOpacity
                     style={{ ...styles.menuBoton, flexDirection: 'row' }}
-                    onPress={() => navigation.navigate('WelcomeScreen')}>
+                    onPress={() => navigation.navigate('Home')}>
+
 
                     {
-                        !authState.isLoggedIn ? <Text style={styles.menuTexto}>Ingresar</Text> : <Text style={styles.menuTexto}>Salir</Text>
+                        (!authState.isLoggedIn || authState.username === "anonimus")
+                            ? <Button title="Ingresar" onPress={() => signInWithUser("Rick")} /> : <Button title="Cerrar sesion" onPress={signOut} />
                     }
 
                 </TouchableOpacity>

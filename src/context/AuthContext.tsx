@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useReducer, useState } from 'react';
 import { createContext } from 'react';
 import { authReducer } from './authReducer';
@@ -27,10 +28,13 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: any) => {
 
+    const navigation = useNavigation();
+
     const [authState, dispatch] = useReducer(authReducer, authInitialState);
 
     const signInWithUser = (username: string) => {
         dispatch({ type: 'signInWithUser', payload: username });
+
     }
 
     const signInWithoutUser = () => {

@@ -1,9 +1,35 @@
-import React from 'react'
+import { DrawerScreenProps } from '@react-navigation/drawer'
+import { DrawerActions } from '@react-navigation/native'
+import React, { useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, Button } from 'react-native'
 
-const logo = require('../assets/image/logo.png')
 
-const Home = () => {
+const logo = require('../assets/image/logo.png')
+interface Props extends DrawerScreenProps<any, any> { };
+
+const Home = ({ navigation }: Props) => {
+
+
+
+    useEffect(() => {
+
+        navigation.setOptions({
+            headerLeft: () => (
+                <TouchableOpacity
+                    style={{ marginLeft: 10 }}
+                    onPress={() => navigation.toggleDrawer()}
+                >
+                    <Text>Menu</Text>
+                </TouchableOpacity>
+
+
+            )
+        })
+
+
+    }, [])
+
+
     return (
 
         <View style={{
